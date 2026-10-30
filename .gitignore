@@ -1,0 +1,33 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/
+.pytest_cache/
+
+# React / Node
+node_modules/
+dist/
+build/
+coverage/
+
+# IDE and system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and local databases
+*.log
+*.sqlite3
+*.db
+
+# FinanceIQ datasets - keep local, do not publish
+Data/Raw/*.csv
+Data/Processed/*.csv

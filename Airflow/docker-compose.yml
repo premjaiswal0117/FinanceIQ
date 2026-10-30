@@ -1,0 +1,32 @@
+services:
+
+  postgres:
+    image: postgres:17
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+
+  airflow:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      POSTGRES_PASSWORD: airflow
+      PYTHONPATH: /opt/financeiq
+    volumes:
+      - ./Dags:/opt/airflow/dags
+      - ..:/opt/financeiq
+    working_dir: /opt/financeiq
+    command: standalone
+
+volumes:
+  postgres_data:
